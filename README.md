@@ -1,2 +1,2 @@
 # qa-automation-portfolio
-Portfolio of Selenium, Cucumber, and Karate automation projects using Java
+This portfolio contains automation testing projects using Java. It includes examples of Selenium for UI testing, Cucumber for BDD testing, and Karate for API testing. Each project is organized by type and includes setup instructions, code samples, and detailed documentation. The portfolio demonstrates skills in Java-based test automation, best practices, and the ability to work with popular testing frameworks.
