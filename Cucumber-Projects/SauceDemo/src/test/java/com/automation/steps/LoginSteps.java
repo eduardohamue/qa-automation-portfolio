@@ -4,23 +4,21 @@ import com.automation.pages.*;
 import com.automation.utils.DriverFactory;
 import io.cucumber.java.en.*;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
 import static org.junit.Assert.assertTrue;
 
 public class LoginSteps {
     WebDriver driver;
-    String baseUrl;
+
 
     LoginPage loginPage;
     ProductsPage productsPage;
 
     @Given("the user is on the login page")
     public void the_user_is_on_the_login_page() {
-        baseUrl = "https://www.saucedemo.com/";
         driver = DriverFactory.getDriver();
         loginPage = new LoginPage(driver);
-        driver.get(baseUrl);
+        driver.get(DriverFactory.getBaseUrl());
 
 
     }
@@ -46,7 +44,4 @@ public class LoginSteps {
         assertTrue(errorMessage.contains(message));
         driver.quit();
     }
-
-
-
 }
