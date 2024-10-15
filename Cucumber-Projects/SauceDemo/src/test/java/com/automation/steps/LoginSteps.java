@@ -35,13 +35,13 @@ public class LoginSteps {
     public void the_user_is_redirected_to_the_products_page() {
         productsPage = new ProductsPage(driver);
         assertTrue(productsPage.isProductsPage());
-        driver.quit();
+        DriverFactory.quitDriver();
     }
 
     @Then("an error message of {string} is displayed")
     public void an_error_message_of_is_displayed(String message) {
         String errorMessage = loginPage.getErrorMessage();
         assertTrue(errorMessage.contains(message));
-        driver.quit();
+        DriverFactory.quitDriver();
     }
 }

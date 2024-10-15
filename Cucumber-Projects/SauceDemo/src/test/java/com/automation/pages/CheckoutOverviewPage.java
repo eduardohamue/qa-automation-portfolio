@@ -8,31 +8,24 @@ import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
-public class CartPage {
+public class CheckoutOverviewPage {
     WebDriver driver;
 
-    @FindBy(className = "cart_list")
-    WebElement cartList;
-
     @FindBy(className = "cart_item")
-    List<WebElement> products;
+    List<WebElement> productsOverview;
 
-    @FindBy(id = "checkout")
-    WebElement checkoutButton;
+    @FindBy(className = "summary_subtotal_label")
+    WebElement subtotalLabel;
 
-    public CartPage(WebDriver driver){
+    public CheckoutOverviewPage(WebDriver driver){
         this.driver = driver;
-        PageFactory.initElements(driver,this);
-
-    }
-    public String getFirstProductName(){
-        WebElement itemName = products.getFirst().findElement(By.className("inventory_item_name"));
-        return itemName.getText();
+        PageFactory.initElements(driver, this);
     }
 
-    public double getSumAmountProductsInCart(){
+    public double getSumAmountProductsOverview(){
         double amount = 0;
-        for (WebElement product : products) {
+        for (WebElement product : productsOverview) {
+
             //Get the cost of the product
             WebElement poductMoney = product.findElement(By.className("inventory_item_price"));
             String priceString = poductMoney.getText();
@@ -48,7 +41,9 @@ public class CartPage {
         return amount;
     }
 
-    public void clickCheckoutButton(){
-        checkoutButton.click();
+    public double getItemTotal(){
+        String itemTotalText = subtotalLabel.getText();
+        String priceString = itemTotalText.replaceAll("[^0-9.]", "");
+        return Double.parseDouble(priceString);
     }
 }
