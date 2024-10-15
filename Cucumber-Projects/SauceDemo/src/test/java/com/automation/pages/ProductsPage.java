@@ -42,6 +42,7 @@ public class ProductsPage {
         cartLink.click();
     }
 
+    //Add to the cart amount n of products
     public void clickMultipleAddCartButtons(int n){
         for(int i = 0; i < n; i++){
             WebElement buttonAddProduct= productsCabBeAdded.get(i).findElement(By.xpath("//button[text()='Add to cart']"));
@@ -51,15 +52,22 @@ public class ProductsPage {
 
     public double getSumAmountProductsAdded(){
         List<WebElement> products = driver.findElements(By.xpath("//button[text()='Remove']/ancestor::div[@class='inventory_item']"));
-
         double amount = 0;
 
         for (WebElement product : products) {
+
+            //Get the cost of the product
             WebElement poductMoney = product.findElement(By.className("inventory_item_price"));
             String priceString = poductMoney.getText();
+
+            //Convert the cost to a double
             double price = Double.parseDouble(priceString.replace("$", ""));
+
+            //Add the cost of the products
             amount += price;
         }
+
+        //Return the sum of the products
         return amount;
     }
 }

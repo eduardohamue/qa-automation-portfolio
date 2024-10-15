@@ -19,8 +19,6 @@ public class LoginSteps {
         driver = DriverFactory.getDriver();
         loginPage = new LoginPage(driver);
         driver.get(DriverFactory.getBaseUrl());
-
-
     }
     @When("^the user enters (.+) and (.+)")
     public void the_user_enters_credentials(String user, String password) {

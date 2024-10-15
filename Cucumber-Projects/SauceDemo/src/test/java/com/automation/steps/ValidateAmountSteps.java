@@ -23,13 +23,19 @@ public class ValidateAmountSteps {
     @When("the user adds {int} products to the cart")
     public void the_user_adds_products_to_the_cart(Integer n) {
         productsPage.clickMultipleAddCartButtons(n);
+
+        // Sum all the cost of the products that was added to cart
         productsAmount = productsPage.getSumAmountProductsAdded();
     }
 
     @Then("the user proceeds to the cart")
     public void the_user_proceeds_to_the_cart() {
         productsPage.clickCartLink();
+
+        // Sum all the cost of the products that are in the cart page
         double cartAmount = cartPage.getSumAmountProductsInCart();
+
+        // Validate that the sum of the products get in the last page is the same that the products in the current
         assertEquals(cartAmount, productsAmount,0);
 
     }
@@ -48,10 +54,19 @@ public class ValidateAmountSteps {
     }
     @Then("the total amount should be the sum of the prices of both products")
     public void the_total_amount_should_be_the_sum_of_the_prices_of_both_products() {
+
+        // Sum all the cost of the products that are in the overview page
         double overviewAmounmt = checkoutOverviewPage.getSumAmountProductsOverview();
+
+        // Validate that the sum of the products get in the last page is the same that the products in the current
         assertEquals(overviewAmounmt, productsAmount,0);
+
+        // Get the value that the web site calculate about the sum of the cost of the products
         double amountGenerated = checkoutOverviewPage.getItemTotal();
+
+        // Validate that the sum of the products get in the last page is the same that the web site show us
         assertEquals(amountGenerated,productsAmount,0);
+        
         DriverFactory.quitDriver();
     }
 
