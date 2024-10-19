@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(features = "src/test/resources/features/validateAmount.feature", glue = "com.automation.steps",
-        plugin = {"pretty", "html:target/loginReport.html"})
+        plugin = {"pretty", "html:target/ValidateAmountReport.html"})
 public class RunValidateAmountTest {
 
 }

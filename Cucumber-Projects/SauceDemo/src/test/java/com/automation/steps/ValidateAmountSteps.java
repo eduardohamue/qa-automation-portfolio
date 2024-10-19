@@ -9,7 +9,8 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
 
-import static org.junit.Assert.assertEquals;
+//We are going to use Soft Asserts to continue the scripts even if one validation don't pass
+import org.testng.asserts.SoftAssert;  // Import SoftAssert
 
 public class ValidateAmountSteps {
     WebDriver driver = DriverFactory.getDriver();
@@ -19,6 +20,8 @@ public class ValidateAmountSteps {
     CheckoutPage checkoutPage = new CheckoutPage(driver);
     CheckoutOverviewPage checkoutOverviewPage = new CheckoutOverviewPage(driver);
     double productsAmount;
+
+    SoftAssert softAssert = new SoftAssert();
 
     @When("the user adds {int} products to the cart")
     public void the_user_adds_products_to_the_cart(Integer n) {
@@ -36,7 +39,8 @@ public class ValidateAmountSteps {
         double cartAmount = cartPage.getSumAmountProductsInCart();
 
         // Validate that the sum of the products get in the last page is the same that the products in the current
-        assertEquals(cartAmount, productsAmount,0);
+        softAssert.assertEquals(productsAmount, cartAmount, "Sum of the products that were added to the car in " +
+                "the 'products' page should be the same that the sum of all products in the 'car' page");
 
     }
     @Then("the user clicks on the checkout button")
@@ -58,16 +62,22 @@ public class ValidateAmountSteps {
         // Sum all the cost of the products that are in the overview page
         double overviewAmounmt = checkoutOverviewPage.getSumAmountProductsOverview();
 
-        // Validate that the sum of the products get in the last page is the same that the products in the current
-        assertEquals(overviewAmounmt, productsAmount,0);
+        // Validate that the sum of the products added to car get in the 'products' page is the same that the sum of products in the current page
+        softAssert.assertEquals(productsAmount, overviewAmounmt, "Sum of the products that were added to the car in " +
+                "the 'products' page should be the same that the sum of all products in the 'overview' page");
 
         // Get the value that the web site calculate about the sum of the cost of the products
         double amountGenerated = checkoutOverviewPage.getItemTotal();
 
-        // Validate that the sum of the products get in the last page is the same that the web site show us
-        assertEquals(amountGenerated,productsAmount,0);
-        
+        // Validate that the sum of the products added to car get in the 'products' page is the same that the web site show us
+        softAssert.assertEquals(productsAmount, amountGenerated, "Sum of the products that were added to the car in " +
+                "the 'products' page should be the same that the sum of all products in the 'overview' page");
+
         DriverFactory.quitDriver();
+
+        // Call assertAll to report any failures at the end of the test
+        softAssert.assertAll();
+
     }
 
 }
