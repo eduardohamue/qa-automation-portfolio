@@ -11,9 +11,6 @@ import java.util.List;
 public class CartPage {
     WebDriver driver;
 
-    @FindBy(className = "cart_list")
-    WebElement cartList;
-
     @FindBy(className = "cart_item")
     List<WebElement> products;
 

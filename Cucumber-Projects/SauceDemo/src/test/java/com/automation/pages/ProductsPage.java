@@ -22,6 +22,9 @@ public class ProductsPage {
     @FindBy(xpath = "//button[text()='Add to cart']/ancestor::div[@class='inventory_item']")
     List<WebElement> productsCabBeAdded;
 
+    @FindBy(xpath = "//button[text()='Remove']/ancestor::div[@class='inventory_item']")
+    List<WebElement> productsAddedToCar;
+
 
 
     public ProductsPage(WebDriver driver) {
@@ -51,10 +54,10 @@ public class ProductsPage {
     }
 
     public double getSumAmountProductsAdded(){
-        List<WebElement> products = driver.findElements(By.xpath("//button[text()='Remove']/ancestor::div[@class='inventory_item']"));
         double amount = 0;
 
-        for (WebElement product : products) {
+        //The variable productsAddedToCar is called for first time so its going to get all the products that was added to teh cart in previous steps
+        for (WebElement product : productsAddedToCar) {
 
             //Get the cost of the product
             WebElement poductMoney = product.findElement(By.className("inventory_item_price"));
@@ -63,11 +66,11 @@ public class ProductsPage {
             //Convert the cost to a double
             double price = Double.parseDouble(priceString.replace("$", ""));
 
-            //Add the cost of the products
+            //Add the cost of the productsAddedToCar
             amount += price;
         }
 
-        //Return the sum of the products
+        //Return the sum of the productsAddedToCar
         return amount;
     }
 }
