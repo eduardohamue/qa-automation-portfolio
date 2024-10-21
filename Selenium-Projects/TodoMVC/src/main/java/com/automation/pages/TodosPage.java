@@ -37,7 +37,7 @@ public class TodosPage {
         PageFactory.initElements(driver, this);
     }
 
-    // Method to select the correct input field based on the page and add a task
+    // Method to select the correct input field based on the page and add the task
     public void fillOnTodosInput(String taskName, String page) {
         WebElement todosInput = page.equals("React") ? tasksInputReact : tasksInputGeneral;
         fillOnTodosInput(todosInput, taskName);
@@ -47,6 +47,9 @@ public class TodosPage {
     public void fillOnTodosInput(WebElement todosInput, String taskName) {
         wait.until(ExpectedConditions.visibilityOf(todosInput));
         todosInput.sendKeys(taskName + Keys.ENTER);
+
+
+        //Validate if the task that we just created is in the page
         boolean isTaskOnePresent = isTaskPresent(taskName);
         if (isTaskOnePresent) {
             logger.info(String.format("Task '%s' was added successfully.", taskName));
@@ -71,13 +74,13 @@ public class TodosPage {
     public void clickOnToCompleteCheckbox(String taskName) {
         String checkBoxLocator = String.format(dinamicCheckBoxLocator,taskName);
 
-        WebElement toCompleteCheckbox = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(checkBoxLocator)));
 
-        // Now click on the element
+        // Click on complete check box
+        WebElement toCompleteCheckbox = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(checkBoxLocator)));
         toCompleteCheckbox.click();
 
+        //Validate if the task is completed
         boolean isTaskCompleted = isTaskCompleted(toCompleteCheckbox);
-
         if (isTaskCompleted) {
             logger.info("Task completed successfully.");
         } else {
@@ -114,9 +117,11 @@ public class TodosPage {
     }
 
     public void clickOnDeleteButton(String taskName) {
-        String deleteButtonLocator = String.format(dinamicDeleteButton, taskName);
 
+        //Locate the delete button based on the task name
+        String deleteButtonLocator = String.format(dinamicDeleteButton, taskName);
         WebElement deleteCheckbox = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(deleteButtonLocator)));
+
 
         // Now click on the element
         deleteCheckbox.click();
