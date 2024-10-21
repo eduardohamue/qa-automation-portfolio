@@ -9,7 +9,7 @@ Feature: Sauce Demo login functionality
       | Username                | Password      |
       | standard_user           | secret_sauce  |
       | problem_user            | secret_sauce  |
-      | performance_glitch_user | secret_sauce  |
+      | performance_glitch_user | secret_sauces |
       | error_user              | secret_sauce  |
       | visual_user             | secret_sauce  |
 

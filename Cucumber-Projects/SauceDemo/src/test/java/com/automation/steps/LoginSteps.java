@@ -8,16 +8,12 @@ import org.openqa.selenium.WebDriver;
 import static org.junit.Assert.assertTrue;
 
 public class LoginSteps {
-    WebDriver driver;
-
-
-    LoginPage loginPage;
-    ProductsPage productsPage;
+    WebDriver driver = DriverFactory.getDriver();
+    LoginPage loginPage = new LoginPage(driver);
+    ProductsPage productsPage = new ProductsPage(driver);
 
     @Given("the user is on the login page")
     public void the_user_is_on_the_login_page() {
-        driver = DriverFactory.getDriver();
-        loginPage = new LoginPage(driver);
         driver.get(DriverFactory.getBaseUrl());
     }
     @When("^the user enters (.+) and (.+)")
@@ -31,7 +27,6 @@ public class LoginSteps {
     }
     @Then("the user is redirected to the products page")
     public void the_user_is_redirected_to_the_products_page() {
-        productsPage = new ProductsPage(driver);
         assertTrue(productsPage.isProductsPage());
         DriverFactory.quitDriver();
     }
