@@ -6,14 +6,17 @@ import SoftAssert from '../../support/SoftAssert.js'
 import LoginPage from '../../src/page_objects/loginPage.js';
 import DashBoardPage from '../../src/page_objects/dashBoardPage.js';
 
+let driver;
+let loginPage;
+let dashBoardPage;
+let softAssert = new SoftAssert();
 
-const driver = new Builder().forBrowser('firefox').build();
-const loginPage = new LoginPage(driver);
-const dashBoardPage = new DashBoardPage(driver)
-const softAssert = new SoftAssert();
 
 
 Given('I am on the login page', { timeout: 20000 }, async function () {
+    driver = new Builder().forBrowser('firefox').build();
+    loginPage = new LoginPage(driver);
+    
     await loginPage.accessToLoginPage();
 });
 
@@ -31,7 +34,7 @@ When('I click the login button', async function () {
 });
 
 Then('I should see the dashboard page', { timeout: 20000 }, async function () {
-    
+    dashBoardPage = new DashBoardPage(driver)
     const text = await dashBoardPage.getHeaderText();
     softAssert.assertEqual(text, 'Dashboard', 'Text does not match');
     
